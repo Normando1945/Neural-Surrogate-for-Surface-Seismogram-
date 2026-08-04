@@ -1,0 +1,9 @@
+Metadata-Version: 2.4
+Name: core
+Version: 0.1.2
+Summary: Python tools for 2D wave propagation using FDM Method.
+Author: Carlos Celi
+Requires-Python: >=3.10
+Dynamic: author
+Dynamic: requires-python
+Dynamic: summary

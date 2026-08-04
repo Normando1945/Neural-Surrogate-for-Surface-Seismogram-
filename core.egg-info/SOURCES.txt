@@ -1,0 +1,13 @@
+README.md
+setup.py
+core/MaskedPseudoPhysicsInformedTraceLoss_v2.py
+core/PseudoPhysicsInformedTraceLoss.py
+core/__init__.py
+core/core_wp_2d_simul.py
+core/layered_velocity_models.py
+core/receiver_conditioned_spatial_query_net.py
+core/velocity_models.py
+core.egg-info/PKG-INFO
+core.egg-info/SOURCES.txt
+core.egg-info/dependency_links.txt
+core.egg-info/top_level.txt
