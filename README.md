@@ -139,9 +139,16 @@ Verify the installation before launching a simulation:
 python -c "import torch, h5py, numpy, pandas, scipy, matplotlib, pyvista, pyvistaqt, qtpy; import core; assert torch.cuda.is_available(), 'CUDA GPU was not detected'; print(f'Environment OK - {torch.cuda.get_device_name(0)}')"
 ```
 
-## Run the workflow
+## Execution workflow
 
-Run every command from the repository root. The notebook must be completed before the three Python scripts.
+Run every command from the repository root and complete the four steps in the stated order. Each step consumes the output of the previous one.
+
+| Order | Executable | Required input | Main output |
+|---:|---|---|---|
+| 1 | `0.DataGeneratorFromSeed.ipynb` | Simulation configuration | `dataset_surface_seismograms.h5` |
+| 2 | `1.PrepareDataPyTorch_width_Query.py` | HDF5 dataset | Receiver-query inspection |
+| 3 | `2.TrainReceiverConditionedCNN_FourierONet_Balanced.py` | HDF5 dataset | Best/last checkpoints and loss history |
+| 4 | `3.ReviewReceiverConditionedCNN_FourierONet_shuffled_coords_CORRECTED.py` | Dataset and best checkpoint | Prediction and diagnostic figures |
 
 ### Configuration profiles
 
@@ -151,11 +158,11 @@ Run every command from the repository root. The notebook must be completed befor
 | Training epochs | `numberEpoch = 3` | `numberEpoch = 80` | `2.TrainReceiverConditionedCNN_FourierONet_Balanced.py` |
 | Wavefield animation | `anim = 0` | `anim = 1` only when needed | `0.DataGeneratorFromSeed.ipynb` |
 
-> **Quick test limitation:** `n_samples = 10` and `numberEpoch = 3` are a smoke test. They verify installation, data generation, HDF5 storage, query preparation, training, checkpoints, and plotting. They are not scientific validation, a generalization study, or representative paper-scale results. To reproduce the paper-scale workflow and its result figures, run the repository with the corresponding experiment data available in `data/raw/` and use the larger configuration shown below.
+> **Quick test limitation:** `n_samples = 10` and `numberEpoch = 3` are a smoke test. They verify installation, data generation, HDF5 storage, query preparation, training, checkpoints, and plotting. They are not scientific validation, a generalization study, or representative paper-scale results. Use the larger configuration below to run an experiment at a similar scale. Formal paper-reproduction details and the associated experimental data will be described in the article after publication.
 
 For a paper-scale run, edit `n_samples` and `numberEpoch` before beginning. Use a dedicated checkpoint/output folder for each run. The generator may append to an existing HDF5 dataset, so back up or remove a prior test dataset when a clean new dataset is required.
 
-### Step 1 - Generate the dataset
+### Step 1 of 4 - Generate the dataset
 
 Open and run all cells of the notebook in order:
 
@@ -171,7 +178,7 @@ data/raw/dataset_surface_seismograms.h5
 
 Keep `anim = 0` for unattended generation. Set `anim = 1` only when visual wavefield animations are required; this increases runtime and needs a functional graphical environment.
 
-### Step 2 - Inspect receiver-query data
+### Step 2 of 4 - Inspect receiver-query data
 
 ```bash
 python notebooks/1.PrepareDataPyTorch_width_Query.py
@@ -179,7 +186,7 @@ python notebooks/1.PrepareDataPyTorch_width_Query.py
 
 This script checks the HDF5 path, reads the train/validation/test split identifiers, creates receiver-query datasets, and prints shapes, metadata, and a representative DataLoader batch. It must complete without a missing-file error before training starts.
 
-### Step 3 - Train the receiver-conditioned network
+### Step 3 of 4 - Train the receiver-conditioned network
 
 ```bash
 python notebooks/2.TrainReceiverConditionedCNN_FourierONet_Balanced.py
@@ -195,7 +202,7 @@ checkpoints/Test/receiver_conditioned_cnn_loss_history.npz
 
 Do not run the reviewer until these three files exist.
 
-### Step 4 - Review predictions and diagnostics
+### Step 4 of 4 - Review predictions and diagnostics
 
 ```bash
 python notebooks/3.ReviewReceiverConditionedCNN_FourierONet_shuffled_coords_CORRECTED.py
@@ -224,10 +231,12 @@ The main generated artifacts are:
 
 This repository accompanies ongoing research. The associated manuscript is not yet published. The code documents the computational workflow; formal citation information and final archival artifacts will be added after publication.
 
-## Author
+## Authors
 
-Carlos A. Celi<br>
-Pontificia Universidad Catolica del Ecuador
+- **Carlos A. Celi** - Lead author. Pontificia Universidad Católica del Ecuador, Faculty of Habitat, Infrastructure and Creativity, Quito, Ecuador.
+- **Nicolas Mora Bowen** - Universidad de los Andes, Faculty of Engineering and Applied Sciences, Santiago, Chile.
+- **Patricio Palacios** - Universidad de los Andes, Faculty of Engineering and Applied Sciences, Santiago, Chile.
+- **Jose Abell** - Universidad de los Andes, Faculty of Engineering and Applied Sciences, Santiago, Chile.
 
 ## License
 
