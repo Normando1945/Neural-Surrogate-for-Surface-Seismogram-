@@ -1,0 +1,29 @@
+name: Repository checks
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  static-checks:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.10'
+
+      - name: Show Python version
+        run: python --version
+
+      - name: Compile Python sources
+        run: |
+          python -m compileall -q core notebooks
+
+      - name: Validate the generation notebook
+        run: |
+          python -c "import json; json.load(open('notebooks/0.DataGeneratorFromSeed.ipynb', encoding='utf-8')); print('Notebook JSON is valid')"
