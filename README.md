@@ -48,7 +48,26 @@ outputs/Results_Conditioned_Recivers_FourierOnet/
 ```text
 Neural-Surrogate-for-Surface-Seismogram-/
 |
-|-- core/                         # FDM, HDF5, PyTorch, loss, and review utilities
+|-- core/
+|   |-- __init__.py
+|   |   # Public package interface used by the workflow scripts.
+|   |-- core_wp_2d_simul.py
+|   |   # Finite-difference simulation, HDF5 I/O, PyTorch datasets,
+|   |   # receiver-conditioned models, and review utilities.
+|   |-- velocity_models.py
+|   |   # Gaussian-anomaly velocity-model generation.
+|   |-- layered_velocity_models.py
+|   |   # Layered heterogeneous velocity-model generation.
+|   |-- MaskedPseudoPhysicsInformedTraceLoss_v2.py
+|   |   # Active masked pseudo-physics-informed trace loss.
+|   |-- PseudoPhysicsInformedTraceLoss.py
+|   |   # Alternative trace-loss implementation.
+|   |-- receiver_conditioned_spatial_query_net.py
+|   |   # Receiver-query neural-network components.
+|   |-- pyvista_wave_propagation_qt_viewer.py
+|   |   # Interactive Qt/PyVista wavefield visualization.
+|   `-- classes_plots_paper.py
+|       # Utilities for paper-oriented plots and HDF5 inspection.
 |-- notebooks/
 |   |-- 0.DataGeneratorFromSeed.ipynb
 |   |-- 1.PrepareDataPyTorch_width_Query.py
