@@ -85,17 +85,17 @@ Neural-Surrogate-for-Surface-Seismogram-/
 
 ## Before you start
 
-The project requires Python 3.10 or newer. A CUDA-capable NVIDIA GPU is strongly recommended for the larger experiment, although the quick test can run on CPU.
+The project requires Python 3.10 or newer and a CUDA-capable NVIDIA GPU. The supported and documented execution path uses GPU acceleration; a CPU-only installation is not a tested configuration. Training has been successfully run on both an NVIDIA GeForce RTX 4080 and an NVIDIA GeForce RTX 3070 Laptop GPU.
 
 Install the following software and libraries:
 
 - Git and Python 3.10+.
-- PyTorch, installed for the correct CPU or CUDA environment.
+- CUDA-enabled PyTorch. The development environment uses PyTorch with CUDA 11.8.
 - NumPy, Pandas, SciPy, Matplotlib, IPython, Jupyter, Pillow, and h5py.
 - PyVista, PyVistaQt, PySide6, and QtPy. The current `core` package imports these graphical dependencies even when animations are disabled.
 - Adequate disk space for HDF5 datasets, checkpoints, and figures. The 1,000-model configuration is substantially more demanding than the quick test.
 
-> **Important:** install PyTorch first using the [official PyTorch installation selector](https://pytorch.org/get-started/locally/) for your operating system and CUDA version. Do not assume that one CUDA wheel fits every machine.
+> **Important:** install PyTorch first. The command below follows the CUDA 11.8 GPU configuration used by this repository. If your NVIDIA driver or CUDA environment differs, obtain the matching command from the [official PyTorch installation selector](https://pytorch.org/get-started/locally/).
 
 ## How do I get set up?
 
@@ -119,10 +119,10 @@ Activate the environment.
 source .venv/bin/activate
 ```
 
-Install PyTorch through the official selector. For a CPU-only environment, a typical command is:
+Install the CUDA-enabled PyTorch build used by the documented GPU workflow:
 
 ```bash
-pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+pip install torch torchvision --index-url https://download.pytorch.org/whl/cu118
 ```
 
 Install the remaining workflow dependencies, then install the local package.
@@ -136,7 +136,7 @@ pip install -e .
 Verify the installation before launching a simulation:
 
 ```bash
-python -c "import torch, h5py, numpy, pandas, scipy, matplotlib, pyvista, pyvistaqt, qtpy; import core; print('Environment OK')"
+python -c "import torch, h5py, numpy, pandas, scipy, matplotlib, pyvista, pyvistaqt, qtpy; import core; assert torch.cuda.is_available(), 'CUDA GPU was not detected'; print(f'Environment OK - {torch.cuda.get_device_name(0)}')"
 ```
 
 ## Run the workflow
@@ -151,9 +151,9 @@ Run every command from the repository root. The notebook must be completed befor
 | Training epochs | `numberEpoch = 3` | `numberEpoch = 80` | `2.TrainReceiverConditionedCNN_FourierONet_Balanced.py` |
 | Wavefield animation | `anim = 0` | `anim = 1` only when needed | `0.DataGeneratorFromSeed.ipynb` |
 
-> **Quick test limitation:** `n_samples = 10` and `numberEpoch = 3` are a smoke test. They verify installation, data generation, HDF5 storage, query preparation, training, checkpoints, and plotting. They are not scientific validation, a generalization study, or representative paper-scale results.
+> **Quick test limitation:** `n_samples = 10` and `numberEpoch = 3` are a smoke test. They verify installation, data generation, HDF5 storage, query preparation, training, checkpoints, and plotting. They are not scientific validation, a generalization study, or representative paper-scale results. To reproduce the paper-scale workflow and its result figures, run the repository with the corresponding experiment data available in `data/raw/` and use the larger configuration shown below.
 
-For a larger run, edit `n_samples` and `numberEpoch` before beginning. Use a dedicated checkpoint/output folder for each run. The generator may append to an existing HDF5 dataset, so back up or remove a prior test dataset when a clean new dataset is required.
+For a paper-scale run, edit `n_samples` and `numberEpoch` before beginning. Use a dedicated checkpoint/output folder for each run. The generator may append to an existing HDF5 dataset, so back up or remove a prior test dataset when a clean new dataset is required.
 
 ### Step 1 - Generate the dataset
 
