@@ -1,6 +1,10 @@
 # A Receiver-Query Neural Surrogate for Surface Seismogram Emulation from Heterogeneous 2D Velocity Models
 
 <p align="center">
+<img width="2130" height="853" alt="image" src="https://github.com/user-attachments/assets/f1d6246c-07bb-4705-a9c3-49b2457e663c" />
+</p>
+
+<p align="center">
   <img width="2286" height="685" alt="image" src="https://github.com/user-attachments/assets/70a20a9a-9ce1-4ce8-a26b-783960a5b41d" />
 </p>
 
