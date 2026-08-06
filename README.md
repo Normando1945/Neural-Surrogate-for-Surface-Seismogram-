@@ -162,6 +162,17 @@ Run every command from the repository root and complete the four steps in the st
 
 For a paper-scale run, edit `n_samples` and `numberEpoch` before beginning. Use a dedicated checkpoint/output folder for each run. The generator may append to an existing HDF5 dataset, so back up or remove a prior test dataset when a clean new dataset is required.
 
+### Expected runtime for the larger experiment
+
+On the reference workstation (NVIDIA GeForce RTX 4080, CUDA-enabled PyTorch), the larger configuration (`n_samples = 1000`, `numberEpoch = 80`, and `anim = 0`) typically requires:
+
+| Stage | Typical runtime |
+|---|---:|
+| Dataset generation: 1,000 FDM simulations | 8–10 hours |
+| Network training: 80 epochs | 8–10 hours |
+
+Allow approximately 16–20 hours for the two main computational stages, excluding dataset inspection and final review. Actual runtime depends on the GPU, CUDA/PyTorch versions, storage performance, background workload, and whether `anim = 1` is enabled. The workflow has also run successfully on an RTX 3070 Laptop GPU, although runtimes may differ.
+
 ### Step 1 of 4 - Generate the dataset
 
 Open and run all cells of the notebook in order:
