@@ -77,6 +77,8 @@ Neural-Surrogate-for-Surface-Seismogram-/
 |-- checkpoints/Test/             # Best model, last model, and loss history
 |-- outputs/                      # Prediction and diagnostic figures
 |-- Network_Arq/                  # Network parameter-profile workbook
+|-- assets/
+|   `-- authors-team.png          # Portraits of the project authors
 |-- videos/                       # Optional animation outputs
 |-- setup.py                      # Local package metadata
 |-- README.md
@@ -243,6 +245,10 @@ The main generated artifacts are:
 This repository accompanies ongoing research. The associated manuscript is not yet published. The code documents the computational workflow; formal citation information and final archival artifacts will be added after publication.
 
 ## Authors
+
+<p align="center">
+  <img src="assets/authors-team.png" alt="Portraits of the project authors" width="100%" />
+</p>
 
 - **Carlos A. Celi** - Lead author. Pontificia Universidad Católica del Ecuador, Faculty of Habitat, Infrastructure and Creativity, Quito, Ecuador.
 - **Nicolas Mora Bowen** - Universidad de los Andes, Faculty of Engineering and Applied Sciences, Santiago, Chile.
